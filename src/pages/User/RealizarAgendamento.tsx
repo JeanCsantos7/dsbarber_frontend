@@ -15,7 +15,7 @@ const RealizarAgendamento = () => {
   const [servicos, setServicos] = useState<string>("");
   const [horas, setHoras] = useState<HorariosI[]>([]);
   const [datas, setDatas] = useState<Datas[]>([]);
-  const [idData, setIdData] = useState<number>(0);
+  const [ setIdData] = useState<number>(0);
   const [idHoras, setIdHoras] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
 
