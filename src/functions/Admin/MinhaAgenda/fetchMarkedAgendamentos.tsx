@@ -4,7 +4,7 @@
 
  const fetchMarkedAgendamentos = async ({setHorariosMarcados} : {setHorariosMarcados: React.Dispatch<React.SetStateAction<HorariosMarcados[]>>}) => {
     try {
-      const response = await axios.get("http://localhost:5000/getMarkedAgendamentos/Marcado");
+      const response = await axios.get("https://dsbarber-backend.vercel.app/getMarkedAgendamentos/Marcado");
       const result = response.data.map((item: Agenda) => {
         const criarData = new Date(item.data);
         const dataFormatada = criarData.toLocaleDateString("pt-br");

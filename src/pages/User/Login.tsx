@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Logar from "@/functions/User/Login/Logar";
 import { useState } from "react";
 
 const Login = () => {
@@ -20,47 +20,7 @@ const Login = () => {
   const[controlError, setControlError] = useState<boolean>(false)
   const[messageError, setMessageError] = useState<string>("")
 
-  const Logar = async (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    try {
-      const linkAPI = "http://localhost:5000/Login";
-      const response = await axios.post(
-        linkAPI,
-        {
-          email: email,
-          senha: senha,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      navigate("/AreaCliente");
-      const { token, id, nome, emailCliente, role, telefone } = response.data;
-
-      sessionStorage.setItem("tokenCliente", token);
-      sessionStorage.setItem("idCliente", id);
-      sessionStorage.setItem("nomeCliente", nome);
-      sessionStorage.setItem("roleCliente", role);
-      sessionStorage.setItem("telefone", telefone);
-      sessionStorage.setItem("emailCliente", emailCliente);
-
-      return response;
-    } catch (error: any) {
-   
-      if(error.response)
-      {
-
-        setTimeout(() => {
-          setControlError(false);
-        }, 4500);
-            
-            setControlError(true)
-            setMessageError(error.response.data.message)
-      }
-      
-    }
-  };
+  
 
   return (
     <div>
@@ -83,7 +43,7 @@ const Login = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={Logar}>
+              <form onSubmit={(e) => Logar({ e, email, senha, navigate, setControlError, setMessageError }) }>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>

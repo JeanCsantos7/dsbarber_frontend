@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import ModalConfirmacao from "@/components/ui/modalConfirmacao";
 import { useState } from "react";
-import axios from "axios";
+import postUsers from "@/functions/User/Cadastro/postUsers";
 
 const Cadastro = () => {
   const navigate = useNavigate();
@@ -14,43 +14,7 @@ const Cadastro = () => {
   const [senha, setSenha] = useState<string>("");
   const [telefone, setTelefone] = useState<string>("");
 
-  const postUsers = (e: React.FormEvent<HTMLFormElement>) => {
-
-
-    try {
-          e.preventDefault();
-      
-      const linkAPI = "http://localhost:5000/createUsers";
-      const data = axios.post(linkAPI, {
-        nome: nome,
-        email: email,
-        telefone: telefone,
-        senha: senha,
-        role: "user",
-      });
-
-    
-      
-
-       setControlarExibicao(true);
-      
-        
-    
-
-       setTimeout(() => {
-       navigate("/");
-       }, 6500);
-     return data
-     
-    } 
-    
-    
-    catch (error: any) {
-     alert("okl")
- console.log("ta errado")
-      setControlarExibicao(false);
-    }
-  };
+ 
 
   return (
     <div>
@@ -70,7 +34,7 @@ const Cadastro = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form method="POST" onSubmit={postUsers}>
+              <form method="POST" onSubmit={(e) => postUsers({ e, nome, email, telefone, senha, setControlarExibicao, navigate })} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="name">Nome</Label>

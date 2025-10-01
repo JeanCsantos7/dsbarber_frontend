@@ -4,7 +4,7 @@ import type detailAgendamentoProps from "@/interface/detailAgendamentoProps";
 
 const detailAgendamentos = async ({id_horas, setResponse} : detailAgendamentoProps) => {
       try {
-        const linkAPI = `http://localhost:5000/detailsAgendamento/${id_horas}`;
+        const linkAPI = `https://dsbarber-backend.vercel.app/detailsAgendamento/${id_horas}`;
         const response = await axios.get(linkAPI);
         const dataFormatada = response.data.map((item: HorariosMarcados) => {
           const criarData = new Date(item.data);

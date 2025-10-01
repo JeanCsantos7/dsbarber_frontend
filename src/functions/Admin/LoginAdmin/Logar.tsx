@@ -4,7 +4,7 @@ import type LoginAdminProps from "@/interface/LoginAdmin";
   const Logar = async ({e, email, senha, setMessageError, setControlError, navigate}: LoginAdminProps) => {
     e.preventDefault();
     try {
-      const linkAPI = "http://localhost:5000/LoginAdmin";
+      const linkAPI = "https://dsbarber-backend.vercel.app/LoginAdmin";
       const response = await axios.post(
         linkAPI,
         {

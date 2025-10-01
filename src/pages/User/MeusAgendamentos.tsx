@@ -5,10 +5,11 @@ import { TbClockHour10Filled } from "react-icons/tb";
 import fotoDuh from "../../assets/fotoDuh.png.jpg";
 import { Button } from "@/components/ui/button";
 import type HorariosMarcados from "@/interface/horariosMarcados";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalCancelUser from "@/components/ui/modalCancelUser";
+import getAgendamentos from "@/functions/User/MeusAgendamentos/getAgendamentos";
+import cancelHorario from "@/functions/User/MeusAgendamentos/cancelHorario";
 
 const MeusAgendamentos = () => {
   const nomeCliente = sessionStorage.getItem("nomeCliente");
@@ -18,34 +19,12 @@ const MeusAgendamentos = () => {
 
   const navigate = useNavigate();
 
-  const getAgendamentos = async () => {
-    try {
-      const linkAPI = `http://localhost:5000/getHorariosMarcadosByName/${nomeCliente}`;
-      const response = await axios.get(linkAPI);
-      setResponse(response.data);
-      return response;
-    } catch (error: any) {
-      if (error.response) {
-        setTimeout(() => setControlError(false), 3500);
-      }
-      setControlError(true);
-      setMessageError(error.response.data.message);
-    }
-  };
+  
 
-  const cancelHorario = async (id_marcados: number, id_horas: number) => {
-    try {
-      const linkAPI = `http://localhost:5000/cancelHorariosUser/${id_marcados}`;
-      const response = await axios.delete(linkAPI, { data: { id_horas } });
-      getAgendamentos();
-      return response;
-    } catch (error: any) {
-      alert(error.response.data.message);
-    }
-  };
+
 
   useEffect(() => {
-    getAgendamentos();
+    getAgendamentos({ nomeCliente, setResponse, setControlError, setMessageError });
   }, [nomeCliente]);
 
   return (
@@ -109,7 +88,7 @@ const MeusAgendamentos = () => {
                     hora={item.hora}
                     id_marcados={item.id_marcados}
                     id_horas={item.id_horas}
-                    confirmDelete={cancelHorario}
+                    confirmDelete={() => cancelHorario({ id_marcados: item.id_marcados, id_horas: item.id_horas })}
                   />
 
                   <a

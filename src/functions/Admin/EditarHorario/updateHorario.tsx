@@ -6,7 +6,7 @@ const updateHorario = async ({ e, id_horas, novaData, novoHorario, setControlMod
     e.preventDefault();
 
     try {
-      const linkAPI = `http://localhost:5000/updateHorarios/${id_horas}`;
+      const linkAPI = `https://dsbarber-backend.vercel.app/updateHorarios/${id_horas}`;
       const response = await axios.put(linkAPI, {
        data: novaData,
         horas: novoHorario,

@@ -5,7 +5,7 @@ import type submitHorariosProps from "@/interface/submitHorariosProps"
  const submitHorarios = async ( {e, horariosSelecionados, id_data, setMostrarModal, setHorariosSelecionados, navigate}: submitHorariosProps) => {
     e.preventDefault()
     try {
-      const linkAPI = "http://localhost:5000/createHours"
+      const linkAPI = "https://dsbarber-backend.vercel.app/createHours"
       const horas = await axios.post(linkAPI, {
         horas: horariosSelecionados,
         id_data: id_data,

@@ -6,7 +6,7 @@
    
     
     try {
-      const linkAPI = `http://localhost:5000/cancelHorariosAdm/${id_marcados}`;
+      const linkAPI = `https://dsbarber-backend.vercel.app/cancelHorariosAdm/${id_marcados}`;
       const response = await axios.delete(linkAPI, { data: { id_horas } });
     
       return response;

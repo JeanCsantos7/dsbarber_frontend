@@ -1,12 +1,13 @@
 import Header from "@/components/ui/header";
 import { Servicos } from "@/interface/ServiçosData";
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import type Datas from "@/interface/datas";
 import type HorariosI from "@/interface/horariosI";
 import ModalConfirmacao2 from "@/components/ui/modalConfirmacao2";
+import fetchDate from "@/functions/User/RealizarAgendamentos/fetchDate";
+import submitForm from "@/functions/User/RealizarAgendamentos/submitForm";
+import fetchHours from "@/functions/User/RealizarAgendamentos/fetchHours";
 
 const RealizarAgendamento = () => {
   const [datasSelecionadas, setDatasSelecionadas] = useState<string>("");
@@ -22,84 +23,15 @@ const RealizarAgendamento = () => {
   const telefoneCliente = sessionStorage.getItem("telefone");
   const emailCliente = sessionStorage.getItem("emailCliente");
 
-  const fetchDate = async () => {
-    try {
-      const linkAPI = "http://localhost:5000/getFreeDates";
-      const response = await axios.get(linkAPI);
+  
 
-      const formatacaoDatas = response.data.map((item: Datas) => {
-        const novaData = new Date(item.data);
-        const dataFormatada = novaData.toLocaleDateString("pt-br");
-        return { ...item, data: dataFormatada };
-      });
 
-      setDatas(formatacaoDatas);
-    } catch (error: any) {
-      if (error.response) {
-        setDatas([]);
-      }
-    }
-  };
 
-  const fetchHours = async (id_data: number) => {
-    try {
-      const linkAPI = `http://localhost:5000/getAgendamentosById/${id_data}/Livre`;
-      const response = await axios.get(linkAPI);
-      setHoras(response.data);
-      setIdData(id_data);
-    } catch (error: any) {
-      if (error.response) alert(error.response.data.message);
-    }
-  };
 
-  const submitEmailDuh = async () => {
-    try {
-      const linkAPI = "http://localhost:5000/submitEmailAdmin";
-      const response = await axios.post(linkAPI, {
-        name: nomeCliente,
-        servico: servicos,
-        email: emailCliente,
-        date: datasSelecionadas,
-        telefone: telefoneCliente,
-      });
-      return response;
-    } catch (error: any) {
-      alert(error.response.data.message);
-    }
-  };
-
-  const submitForm = async (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    try {
-      const linkAPI = "http://localhost:5000/createHorariosMarcados";
-      const response = await axios.post(linkAPI, {
-        id_horas: idHoras,
-        nomecliente: nomeCliente,
-        emailcliente: emailCliente,
-        telefone: telefoneCliente,
-        servico: servicos,
-        data: datasSelecionadas,
-        hora: horariosSelecionados,
-      });
-
-      submitEmailDuh();
-      setShowModal(true);
-      setDatasSelecionadas("");
-      setHorariosSelecionados("");
-      setServicos("");
-
-      setTimeout(() => setShowModal(false), 3800);
-      return response;
-    } catch (error: any) {
-      if (error.response) {
-        alert(error.response.data.message);
-        setShowModal(false);
-      }
-    }
-  };
+ 
 
   useEffect(() => {
-    fetchDate();
+    fetchDate({setDatas});
   }, [idHoras]);
 
   return (
@@ -117,7 +49,7 @@ const RealizarAgendamento = () => {
 
         <form
           method="POST"
-          onSubmit={submitForm}
+          onSubmit={(e) => submitForm({ e, idHoras, nomeCliente, emailCliente, telefoneCliente, servicos, datasSelecionadas, horariosSelecionados, setShowModal, setDatasSelecionadas, setHorariosSelecionados, setServicos }) }
           className="bg-[#1f1f1f] p-6 rounded-xl shadow-lg flex gap-4.5 flex-col lg:w-[56%] md:w-full"
         >
           <div className="flex flex-col gap-2">
@@ -146,7 +78,7 @@ const RealizarAgendamento = () => {
                 setDatasSelecionadas(e.target.value);
                 const dataSelecionada = datas.find((d) => d.data === e.target.value);
                 if (dataSelecionada) {
-                  fetchHours(dataSelecionada.id_datas);
+                  fetchHours({setHoras, setIdData, id_data: dataSelecionada.id_datas});
                 }
               }}
               required
