@@ -23,7 +23,7 @@ interface ModalDeleteHorariosProps {
     fetchFreeAgendamentos: () => void;
 }
 
-export function ModalDeleteHorarios({ id_marcados, id_horas, fetchFreeAgendamentos }: ModalDeleteHorariosProps) {
+export function ModalDeleteHorarios({  id_horas, fetchFreeAgendamentos }: ModalDeleteHorariosProps) {
 
   
 

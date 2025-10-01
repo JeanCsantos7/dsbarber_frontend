@@ -10,5 +10,5 @@ export default interface HorariosMarcados{
   data: string;
   horas: string;
   hora: string;
- 
+  
 }

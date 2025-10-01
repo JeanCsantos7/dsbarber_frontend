@@ -6,9 +6,9 @@ import type HorariosMarcados from "@/interface/horariosMarcados";
 
 const cancelHorario = async ({ id_marcados, id_horas }: cancelHorarioProps) => {
   const nomeCliente = sessionStorage.getItem("nomeCliente");
-  const [response, setResponse] = useState<HorariosMarcados[]>([]);
-  const [controlError, setControlError] = useState<boolean>(false);
-  const [messageError, setMessageError] = useState<string>("");
+  const [setResponse] = useState<HorariosMarcados[]>([]);
+  const [setControlError] = useState<boolean>(false);
+  const [setMessageError] = useState<string>("");
 
   try {
     const linkAPI = `https://dsbarber-backend.vercel.app/cancelHorariosUser/${id_marcados}`;
@@ -22,6 +22,8 @@ const cancelHorario = async ({ id_marcados, id_horas }: cancelHorarioProps) => {
     return response;
   } catch (error: any) {
     alert(error.response.data.message);
+   
+    return error;
   }
 };
 
