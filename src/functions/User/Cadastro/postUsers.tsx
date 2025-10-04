@@ -34,8 +34,7 @@ import type postUsersProps from "@/interface/postUsersProps";
     
     
     catch (error: any) {
-     alert("okl")
- console.log("ta errado")
+ 
       setControlarExibicao(false);
     }
   };

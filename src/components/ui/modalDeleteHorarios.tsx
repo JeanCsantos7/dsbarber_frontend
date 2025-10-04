@@ -32,7 +32,7 @@ export function ModalDeleteHorarios({  id_horas, fetchFreeAgendamentos }: ModalD
     const deleteHorario = async() => {
 
         try {
-            const linkAPI = `http://localhost:5000/deleteAgendamento/${id_horas}`;
+            const linkAPI = `https://dsbarber-backend.vercel.app/deleteAgendamento/${id_horas}`;
                const response = await axios.delete(linkAPI)
       
             fetchFreeAgendamentos()

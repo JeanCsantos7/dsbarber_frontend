@@ -53,7 +53,8 @@ const Agenda = () => {
               setSubmitData,
               setSubmitHorario,
               setDatasSelecionadas,
-              datasSelecionadas,
+              datasSelecionadas
+             
             })
           }
           className="max-w-2xl mx-auto px-6"
@@ -64,6 +65,7 @@ const Agenda = () => {
               <Input
                 type="date"
                 value={datasSelecionadas}
+            
                 onChange={(e) => setDatasSelecionadas(e.target.value)}
                 className="text-white border border-[#528a14] rounded-lg p-3 bg-transparent focus:ring-2 focus:ring-[#528a14]"
               />

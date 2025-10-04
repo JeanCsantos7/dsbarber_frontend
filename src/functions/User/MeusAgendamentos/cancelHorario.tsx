@@ -5,12 +5,14 @@ import { useState } from "react";
 import type HorariosMarcados from "@/interface/horariosMarcados";
 
 const cancelHorario = async ({ id_marcados, id_horas }: cancelHorarioProps) => {
-  const nomeCliente = sessionStorage.getItem("nomeCliente");
+ 
+
+  try {
+     const nomeCliente = sessionStorage.getItem("nomeCliente");
   const [setResponse] = useState<HorariosMarcados[]>([]);
   const [setControlError] = useState<boolean>(false);
   const [setMessageError] = useState<string>("");
-
-  try {
+    
     const linkAPI = `https://dsbarber-backend.vercel.app/cancelHorariosUser/${id_marcados}`;
     const response = await axios.delete(linkAPI, { data: { id_horas } });
     getAgendamentos({

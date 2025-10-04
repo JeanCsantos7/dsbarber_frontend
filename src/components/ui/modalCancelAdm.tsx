@@ -37,7 +37,7 @@ export function ModalCancelAdm({nomecliente, emailcliente, data, horas, confirmD
 
 
     try {
-       const linkAPI = `http://localhost:5000/submitEmailCancelAdm`
+       const linkAPI = `https://dsbarber-backend.vercel.app/submitEmailCancelAdm`
        const response = await axios.post(linkAPI, {
         nomecliente,
         emailcliente,

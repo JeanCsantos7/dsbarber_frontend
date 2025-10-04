@@ -24,7 +24,7 @@ export function ModalCancelUser({ confirmDelete, nomecliente, emailcliente, data
     
     try {
      confirmDelete(id_marcados, id_horas)
-      const linkAPI = `http://localhost:5000/submitEmailCancelUser`
+      const linkAPI = `https://dsbarber-backend.vercel.app/submitEmailCancelUser`
       const response = await axios.post(linkAPI, {
         emailcliente,
         nomecliente,
